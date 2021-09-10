@@ -14,8 +14,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import Image from 'next/image';
-import { Autocomplete } from '@material-ui/lab';
-import ButtonBase from '@material-ui/core/ButtonBase';
 
 const fetchApi = async (area, budget, genre) => {
   const query = new URLSearchParams();
@@ -47,7 +45,7 @@ const fetchApi = async (area, budget, genre) => {
   query.append('budget', budgetList[budget]);
   query.append('genre', genreList[genre]);
 
-  const apiUri = `${VERCEL_URL}/api/getJson?${query.toString()}`;
+  const apiUri = `${process.env.VERCEL_URL}/api/getJson?${query.toString()}`;
   console.log(apiUri);
   const res = await fetch(apiUri);
   const data = await res.json();
