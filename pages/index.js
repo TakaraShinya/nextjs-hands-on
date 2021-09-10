@@ -48,10 +48,12 @@ const fetchApi = async (area, budget, genre) => {
   query.append('genre', genreList[genre]);
 
   const apiUri = `${VERCEL_URL}/api/getJson?${query.toString()}`;
+  console.log(apiUri);
   const res = await fetch(apiUri);
   const data = await res.json();
   if (!res.ok) {
     const message = data?.message ?? result;
+    console.log(message);
     throw new Error(message);
   }
 
