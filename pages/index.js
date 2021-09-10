@@ -18,7 +18,7 @@ import Image from 'next/image';
 const fetchApi = async (area, budget, genre) => {
   const query = new URLSearchParams();
   const { publicRuntimeConfig } = getConfig();
-  const { VERCEL_URL } = publicRuntimeConfig;
+//  const { VERCEL_URL } = publicRuntimeConfig;
   const areaCode = ['&small_area=X119', '&middle_area=Y964'];
   const budgetList = ['&budget=B010,B011', '&budget=B001,B002', '&budget=B003,B008', ''];
   const genreList = [
@@ -45,7 +45,7 @@ const fetchApi = async (area, budget, genre) => {
   query.append('budget', budgetList[budget]);
   query.append('genre', genreList[genre]);
 
-  const apiUri = `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getJson?${query.toString()}`;
+  const apiUri = `${VERCEL_URL}/api/getJson?${query.toString()}`;
   console.log(apiUri);
   const res = await fetch(apiUri);
   const data = await res.json();
