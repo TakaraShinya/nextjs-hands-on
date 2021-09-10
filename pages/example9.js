@@ -1,5 +1,5 @@
-// React.useStateとtextField
 import React from 'react';
+import getConfig from 'next/config';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +8,8 @@ import { makeStyles } from '@material-ui/styles';
 import { red } from '@material-ui/core/colors';
 import { CustomButton } from '/components/uiParts/CustomButton';
 
-const initUsername = 'jey3dayo';
+const { publicRuntimeConfig } = getConfig();
+const { VERCEL_URL } = publicRuntimeConfig;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,41 +32,29 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const fetchApi = async username => {
-  const uri = `https://api.github.com/users/${username}`;
-  const res = await fetch(uri);
+const fetchApi = async () => {
+  const query = new URLSearchParams();
+  query.set('po', 'X119');
+  const res = await fetch(`http://localhost:3000/api/gourmet?${query.toString()}`);
   const result = await res.json();
-
-  if (!res.ok) {
-    const message = result?.message ?? result;
-    throw new Error(message);
-  }
 
   return result;
 };
 
 const Example = ({ userInfo }) => {
   // state用意
-  const [username, setUsername] = React.useState(initUsername);
   const [value, setValue] = React.useState(userInfo ?? '');
   const classes = useStyles();
-
-  // ユーザ名の反映
-  const handleChange = event => {
-    setUsername(event.target.value);
-  };
 
   // 更新ボタンを押すと実行
   const onClick = async () => {
     try {
-      const res = await fetchApi(username);
+      const res = await fetchApi();
       setValue(res);
     } catch (e) {
       setValue(e?.message ?? 'error');
     }
   };
-
-  const avatarUrl = value?.avatar_url ?? null;
 
   return (
     <Container>
@@ -78,13 +67,9 @@ const Example = ({ userInfo }) => {
             '& .MuiTextField-root': { m: 1, width: '25ch' },
           }}
         >
-          <TextField id="outlined-basic" label="username" variant="outlined" value={username} onChange={handleChange} />
-
           <Box component="span" sx={{ padding: '10px' }}>
             <CustomButton onClick={onClick}>更新</CustomButton>
           </Box>
-
-          {avatarUrl ? <Avatar alt="avatar" src={avatarUrl} className={classes.large} /> : null}
 
           <Box sx={{ padding: '10px' }}>value: {JSON.stringify(value)}</Box>
         </Box>
@@ -101,7 +86,7 @@ const Example = ({ userInfo }) => {
 
 // コンストラクタみたいなもの
 export async function getServerSideProps() {
-  const res = await fetchApi(initUsername);
+  const res = await fetchApi();
   return {
     props: {
       userInfo: res,
