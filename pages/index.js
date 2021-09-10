@@ -45,7 +45,7 @@ const fetchApi = async (area, budget, genre) => {
   query.append('budget', budgetList[budget]);
   query.append('genre', genreList[genre]);
 
-  const apiUri = `${process.env.VERCEL_URL}/api/getJson?${query.toString()}`;
+  const apiUri = `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/getJson?${query.toString()}`;
   console.log(apiUri);
   const res = await fetch(apiUri);
   const data = await res.json();
