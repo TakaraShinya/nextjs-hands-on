@@ -4,7 +4,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     env: NODE_ENV,
     APP_NAME,
-    VERCEL_URL,
+    WEBAPP_URL,
   },
   serverRuntimeConfig: {
     HOTPEPPER_API_KEY,
