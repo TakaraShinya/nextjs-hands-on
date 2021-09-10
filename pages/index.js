@@ -46,7 +46,6 @@ const fetchApi = async (area, budget, genre) => {
   query.append('genre', genreList[genre]);
 
   const apiUri = `${WEBAPP_URL}/api/getJson?${query.toString()}`;
-  console.log(apiUri);
   const res = await fetch(apiUri);
   const data = await res.json();
   if (!res.ok) {
