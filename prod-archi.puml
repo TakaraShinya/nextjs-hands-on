@@ -6,9 +6,11 @@
 !includeurl AWSPuml/ApplicationIntegration/SQS.puml
 !include AWSPuml/GroupIcons/Cloud.puml
 !include AWSPuml/CustomerEngagement/SimpleEmailServiceSES.puml
+!includeurl https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v5.0/dist/NetworkingAndContentDelivery/Route53.puml
 
 Users(sources, "開発メンバ", "some users")
 Cloud(cloud, "インターネット", "WEB")
+Route53(aws_r53, "", "<app_name>.hogehoge.com")
 
 rectangle "ap-northeast-1" <<VPC>> {
     rectangle "10.30.5.XXX/24" <<Public Subnet>> as pubsub {
@@ -25,6 +27,8 @@ rectangle "ap-northeast-1" <<VPC>> {
         SQS(queue, "SQS", "レポートデータ一時保存など")
         SimpleEmailServiceSES(ses, "SES", "システム内通知周りに利用")
 
+        sources --> aws_r53
+        aws_r53 --> sources
         sources --> cloud
         cloud --> proxy
         proxy --> web
