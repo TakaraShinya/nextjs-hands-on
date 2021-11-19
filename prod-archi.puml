@@ -1,0 +1,51 @@
+@startuml Bastille Development Env on AWS
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/General/Users.puml
+!include AWSPuml/Compute/EC2.puml
+!includeurl AWSPuml/ApplicationIntegration/SQS.puml
+!include AWSPuml/GroupIcons/Cloud.puml
+!include AWSPuml/CustomerEngagement/SimpleEmailServiceSES.puml
+
+Users(sources, "開発メンバ", "some users")
+Cloud(cloud, "インターネット", "WEB")
+
+rectangle "ap-northeast-1" <<VPC>> {
+    rectangle "10.30.5.XXX/24" <<Public Subnet>> as pubsub {
+        EC2(proxy, "Proxy", "has one Elastic IP")
+    }
+    rectangle "10.30.6.XXX/24" <<Private Subnet>> as prvsub {
+        EC2(web, "Web", "has one Elastic IP")
+        EC2(batch, "Batch", "メール送受信などの各種バッチ")
+        EC2(redis, "Redis", "ログインセッションやキャッシュを保持")
+        EC2(mysql, "MySQL", "cstool,APXXXXXXなどのDB")
+        EC2(elasticsearch, "ElasticSearch", "レポートデータ蓄積先")
+        EC2(movabletype, "MovableType", "問合せフォーム、FAQサイト作成用")
+        EC2(piwik, "Piwik", "FAQサイトアクセス解析用")
+        SQS(queue, "SQS", "レポートデータ一時保存など")
+        SimpleEmailServiceSES(ses, "SES", "システム内通知周りに利用")
+
+        sources --> cloud
+        cloud --> proxy
+        proxy --> web
+        proxy --> batch
+        proxy --> redis
+        proxy --> mysql
+        proxy --> elasticsearch
+        proxy --> movabletype
+        proxy --> piwik
+        web --> mysql
+        batch --> mysql
+        web --> redis
+        batch --> redis
+        web --> elasticsearch
+        batch --> queue
+        queue --> elasticsearch
+        web --> ses
+        batch --> ses
+        web --> movabletype
+        web --> piwik
+    }
+}
+
+@enduml
