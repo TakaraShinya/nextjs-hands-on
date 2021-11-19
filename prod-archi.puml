@@ -1,4 +1,4 @@
-@startuml Bastille Development Env on AWS
+@startuml development-env-aws
 !define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist
 !include AWSPuml/AWSCommon.puml
 !include AWSPuml/General/Users.puml
