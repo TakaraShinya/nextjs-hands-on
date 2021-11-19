@@ -2,4 +2,4 @@
 authors = ["TakaraShinya"]
 language = "jp"
 multilingual = true
-src = "src"
+src = "book_src"
