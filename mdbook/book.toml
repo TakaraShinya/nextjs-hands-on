@@ -1,5 +1,5 @@
 [book]
-authors = [TakaraShinya]
+authors = ["TakaraShinya"]
 language = "jp"
 multilingual = true
 src = "src"
