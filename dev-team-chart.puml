@@ -1,0 +1,77 @@
+@startuml 組織図
+object 横軸組織 {
+  # あんさん
+  # よんさん
+  # ふがさん
+}
+
+package インフラ {
+  object A部 #ccffe5 {
+    #リーダーA
+  }
+  object B部 #ccffe5 {
+    #リーダーB
+  }
+  object TeamA {
+    +メンバー
+    +メンバー
+  }
+  object TeamB {
+    +メンバー
+    +メンバー
+    +メンバー
+  }
+}
+
+package アプリ開発 {
+  object C部 #ccffe5 {
+    #リーダーC
+  }
+  object D部 #ccffe5 {
+    #リーダーD
+  }
+  object TeamC1 {
+    +メンバー
+    +メンバー
+  }
+  object TeamC2 {
+    +メンバー
+    -メンバー
+  }
+}
+
+package フロント {
+  object E部 #ccffe5 {
+    #リーダーE
+  }
+  object F部 #ccffe5 {
+    #リーダーF
+  }
+  object TeamD1 {
+    +メンバー
+    +メンバー
+  }
+  object TeamD2 {
+    +メンバー
+    -メンバー
+  }
+}
+
+横軸組織 --> A部
+横軸組織 --> B部
+横軸組織 --> C部
+横軸組織 --> D部
+横軸組織 --> E部
+横軸組織 --> F部
+
+A部 --> TeamA
+B部 --> TeamB
+C部 --> TeamC1
+C部 --> TeamC2
+E部 --> TeamD1
+F部 --> TeamD2
+
+A部 -[hidden]r- B部
+C部 -[hidden]r- D部
+
+@enduml
