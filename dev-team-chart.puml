@@ -1,4 +1,4 @@
-@startuml 組織図
+@startuml dev-team-chart
 object 横軸組織 {
   # あんさん
   # よんさん
