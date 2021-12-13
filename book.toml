@@ -1,0 +1,5 @@
+[book]
+authors = ["TakaraShinya"]
+language = "jp"
+multilingual = true
+src = "book_src"
